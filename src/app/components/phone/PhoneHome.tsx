@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Head from "next/head";
 
 interface PhoneHomeProps {
   onIconClick: (screen: "home" | "tictactoe" | "avatarid" | "folder") => void;
@@ -112,6 +113,13 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
   };
 
   return (
+    <>
+          <Head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
     <div
       style={{
         backgroundImage: 'url("/bg.jpg")',
@@ -127,25 +135,28 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
         <form
           action="https://www.google.com/search"
           method="GET"
-          className="flex w-4/5 bg-gray rounded-lg overflow-hidden shadow-md"
+          className="flex w-5/6 bg-gray-500 rounded-2xl overflow-hidden shadow-md"
         >
+          <div className="flex items-center">
+            <Image
+              src="/google-logo.png"
+              alt="Google Logo"
+              width={36}
+              height={36}
+              className="ml-2" 
+            />
+          </div>
           <input
             type="text"
             name="q"
             placeholder=""
-            className="flex-grow px-4 py-2 text-sm border-none outline-none"
+            className="flex-grow px-4 py-2 text-sm border-none outline-none bg-transparent"
           />
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 text-sm hover:bg-blue-600"
-          >
-            Search
-          </button>
         </form>
       </div>
 
       {/* Weather Information */}
-      <div className="absolute top-16 right-4 text-white">
+      <div className="absolute top-10 right-4 text-white">
         {loading ? (
           <p>Loading weather...</p>
         ) : (
@@ -157,9 +168,9 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
           </>
         )}
       </div>
-      <div className="absolute top-16 left-4 text-white text-lg">
-        <p>{time}</p>
-        <p>{formattedDate}</p>
+      <div className="absolute top-10 left-4 text-white text-lg">
+        <p className="text-4xl">{time}</p>
+        <p className="text-xs">{formattedDate}</p>
       </div>
       <div className="absolute bottom-20 left-0 right-0 grid grid-cols-4 gap-3">
         <div
@@ -173,10 +184,10 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             height={iconSize}
             className="rounded-lg"
           />
-          <span className="text-sm text-gray-700">GitHub</span>
+          <span className="text-xs" style={{ fontFamily: 'Roboto, sans-serif',fontSize:"11px" }}>GitHub</span>
         </div>
         <div
-          className="flex flex-col items-center cursor-pointer"
+          className="flex flex-col items-center"
           onClick={() => openProfile("https://linkedin.com/in/sarhaneghribi")}
         >
           <Image
@@ -186,7 +197,7 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             height={iconSize}
             className="rounded-lg"
           />
-          <span className="text-sm text-gray-700">LinkedIn</span>
+          <span className="text-xs" style={{ fontFamily: 'Roboto, sans-serif',fontSize:"11px" }}>LinkedIn</span>
         </div>
         <div className="flex flex-col items-center">
           <Image
@@ -197,7 +208,7 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             className="rounded-lg"
             onClick={() => onIconClick("avatarid")}
           />
-          <span className="text-sm text-gray-700">AvatarID</span>
+          <span className="text-xs" style={{ fontFamily: 'Roboto, sans-serif',fontSize:"11px" }}>AvatarID</span>
         </div>
         <div className="flex flex-col items-center">
           <Image
@@ -208,7 +219,7 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             className="rounded-lg bg-white"
             onClick={() => onIconClick("tictactoe")}
           />
-          <span className="text-sm text-gray-700">TicTacToe</span>
+          <span className="text-xs" style={{ fontFamily: 'Roboto, sans-serif',fontSize:"11px" }}>TicTacToe</span>
         </div>
         <div className="flex flex-col items-center">
           <Image
@@ -218,10 +229,11 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             height={iconSize}
             className="rounded-lg"
           />
-          <span className="text-sm text-gray-700">Files</span>
+          <span className="text-xs" style={{ fontFamily: 'Roboto, sans-serif',fontSize:"11px" }}>Files</span>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -51,13 +51,13 @@ export default function TicTacToe() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-blue-50 rounded-lg">
-      <h1 className="text-3xl font-bold mb-4">Tic Tac Toe</h1>
+      <h1 className="text-3xl font-bold mb-3">Tic Tac Toe</h1>
       <div className="grid grid-cols-3 gap-3">
         {board.map((cell, index) => (
           <div
             key={index}
             onClick={() => handleClick(index)}
-            className="w-20 h-20 flex items-center justify-center bg-white border border-gray-300 text-2xl font-bold cursor-pointer rounded-lg margin-10"
+            className="w-20 h-20 flex items-center justify-center bg-white border border-gray-300 text-2xl font-bold cursor-pointer rounded-lg margin-20 shadow-md transition-transform transform hover:scale-105"
           >
             {cell}
           </div>
