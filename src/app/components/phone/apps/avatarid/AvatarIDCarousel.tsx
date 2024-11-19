@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 interface AvatarIdCarouselProps {
   totalScreens: number;
@@ -7,16 +7,15 @@ interface AvatarIdCarouselProps {
 }
 
 const AvatarIdCarousel: React.FC<AvatarIdCarouselProps> = ({
-  totalScreens,
   currentIndex,
   setCurrentIndex,
 }) => {
   const goToNextImage = () => {
-    setCurrentIndex((prevIndex: number) =>
-      Math.min(prevIndex + 1, totalScreens)
-    );
+    setCurrentIndex((prevIndex: number) => Math.min(prevIndex + 1));
   };
-
+  useEffect(() => {
+    console.log("Current Index Updated:", currentIndex);
+  }, [currentIndex]);
   const imagePath = `/avatarid/avatarid-${currentIndex}.png`;
 
   return (
