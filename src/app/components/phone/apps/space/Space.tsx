@@ -53,15 +53,15 @@ const Space = () => {
       Array(500).fill().forEach(addStar);
 
       // Move moon and earth to appropriate initial positions
-      moonMesh.position.z = -5;
-      moonMesh.position.y = 1;
+      moonMesh.position.z = 15;
+      moonMesh.position.y = 10;
 
       scene.add(moonMesh);
       scene.add(earthMesh);
 
       // Move the camera back further to zoom out more and adjust the vertical position
       camera.position.z = 45; // Increase this value to zoom out more
-      camera.position.y = 2; // Adjust the camera's Y position to move it up
+      camera.position.y = 10; // Adjust the camera's Y position to move it up
 
       // Move the Earth mesh up to center it better in the viewport
       earthMesh.position.y = 10; // Move Earth up along the Y axis
