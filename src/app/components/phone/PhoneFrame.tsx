@@ -4,9 +4,12 @@ import Image from "next/image";
 import PhoneHome from "./PhoneHome";
 import TicTacToe from "./apps/TicTacToe";
 import AvatarID from "./apps/avatarid/AvatarID";
+import Folder from "./apps/folder/Folder";
+import Space from "./apps/space/Space";
+import Medium from "./apps/medium/Medium";
 function PhoneFrame() {
   const [currentScreen, setCurrentScreen] = useState<
-    "home" | "tictactoe" | "avatarid" | "folder"
+    "home" | "tictactoe" | "avatarid" | "folder" | "space" | "medium"
   >("home");
   return (
     <div className="relative w-[300px] h-[640px] rounded-lg overflow-hidden cursor-pointer">
@@ -22,7 +25,12 @@ function PhoneFrame() {
         )}
         {currentScreen === "tictactoe" && <TicTacToe />}
         {currentScreen === "avatarid" && <AvatarID />}
-        <div className="absolute bottom-8 flex justify-center items-center space-x-12">
+        {currentScreen === "folder" && <Folder />}
+        {currentScreen === "space" && <Space />}
+        <div
+          className="absolute bottom-8 flex justify-center items-center space-x-12"
+          onClick={() => setCurrentScreen("home")}
+        >
           <div className="w-5 h-5 bg-gray-300 rounded"></div>
           <div className="relative flex items-center justify-center">
             <div className="w-6 h-6 border-2 border-gray-300 rounded-full"></div>

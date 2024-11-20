@@ -3,7 +3,9 @@ import Image from "next/image";
 import Head from "next/head";
 
 interface PhoneHomeProps {
-  onIconClick: (screen: "home" | "tictactoe" | "avatarid" | "folder") => void;
+  onIconClick: (
+    screen: "home" | "tictactoe" | "avatarid" | "folder" | "space" | "medium"
+  ) => void;
 }
 
 const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
@@ -114,125 +116,201 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
 
   return (
     <>
-          <Head>
+      <Head>
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap"
           rel="stylesheet"
         />
       </Head>
-    <div
-      style={{
-        backgroundImage: 'url("/bg.jpg")',
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: "95%",
-        width: "90%",
-        position: "absolute",
-        borderRadius: "20px",
-      }}
-    >
-      <div className="mt-60 w-full flex justify-center mb-4">
-        <form
-          action="https://www.google.com/search"
-          method="GET"
-          className="flex w-5/6 bg-gray-500 rounded-2xl overflow-hidden shadow-md"
-        >
-          <div className="flex items-center">
-            <Image
-              src="/google-logo.png"
-              alt="Google Logo"
-              width={36}
-              height={36}
-              className="ml-2" 
+      <div
+        style={{
+          backgroundImage: 'url("/bg.jpg")',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          height: "95%",
+          width: "90%",
+          position: "absolute",
+          borderRadius: "20px",
+        }}
+      >
+        <div className="mt-60 w-full flex justify-center mb-4">
+          <form
+            action="https://www.google.com/search"
+            method="GET"
+            className="flex w-5/6 bg-gray-500 rounded-2xl overflow-hidden shadow-md"
+          >
+            <div className="flex items-center">
+              <Image
+                src="/google-logo.png"
+                alt="Google Logo"
+                width={36}
+                height={36}
+                className="ml-2"
+              />
+            </div>
+            <input
+              type="text"
+              name="q"
+              placeholder=""
+              className="flex-grow px-4 py-2 text-sm border-none outline-none bg-transparent"
             />
-          </div>
-          <input
-            type="text"
-            name="q"
-            placeholder=""
-            className="flex-grow px-4 py-2 text-sm border-none outline-none bg-transparent"
-          />
-        </form>
-      </div>
+          </form>
+        </div>
 
-      {/* Weather Information */}
-      <div className="absolute top-10 right-4 text-white">
-        {loading ? (
-          <p>Loading weather...</p>
-        ) : (
-          <>
-            <p>{location}</p>
-            <p>
-              {temperature ? `${temperature}°C` : "Temperature not available"}
-            </p>
-          </>
-        )}
+        {/* Weather Information */}
+        <div className="absolute top-10 right-4 text-white">
+          {loading ? (
+            <p>Loading weather...</p>
+          ) : (
+            <>
+              <p>{location}</p>
+              <p>
+                {temperature ? `${temperature}°C` : "Temperature not available"}
+              </p>
+            </>
+          )}
+        </div>
+        <div className="absolute top-10 left-4 text-white text-lg">
+          <p className="text-4xl">{time}</p>
+          <p className="text-xs">{formattedDate}</p>
+        </div>
+        <div className="absolute bottom-20 left-0 right-0 grid grid-cols-4 gap-3">
+          <div
+            className="flex flex-col items-center"
+            onClick={() => openProfile("https://github.com/SarhaneGhribi")}
+          >
+            <Image
+              src="/github.png"
+              alt="GitHub"
+              width={iconSize}
+              height={iconSize}
+              className="rounded-lg"
+            />
+            <span
+              className="text-xs"
+              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+            >
+              GitHub
+            </span>
+          </div>
+          <div
+            className="flex flex-col items-center"
+            onClick={() => openProfile("https://linkedin.com/in/sarhaneghribi")}
+          >
+            <Image
+              src="/linkedin.png"
+              alt="LinkedIn"
+              width={iconSize}
+              height={iconSize}
+              className="rounded-lg"
+            />
+            <span
+              className="text-xs"
+              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+            >
+              LinkedIn
+            </span>
+          </div>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/AvatarID.png"
+              alt="Camera"
+              width={iconSize}
+              height={iconSize}
+              className="rounded-lg"
+              onClick={() => onIconClick("avatarid")}
+            />
+            <span
+              className="text-xs"
+              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+            >
+              AvatarID
+            </span>
+          </div>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/tictactoe.png"
+              alt="Tic Tac Toe"
+              width={iconSize}
+              height={iconSize}
+              className="rounded-lg bg-white"
+              onClick={() => onIconClick("tictactoe")}
+            />
+            <span
+              className="text-xs"
+              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+            >
+              TicTacToe
+            </span>
+          </div>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/space.jpg"
+              alt="Explore"
+              width={iconSize}
+              height={iconSize}
+              className="rounded-lg"
+              onClick={() => onIconClick("space")}
+            />
+            <span
+              className="text-xs"
+              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+            >
+              Explore
+            </span>
+          </div>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/meduim.png"
+              alt="Medium"
+              width={iconSize}
+              height={iconSize}
+              className="rounded-lg"
+              onClick={() => openProfile("https://medium.com/@sarhane.ghribi")}
+            />
+            <span
+              className="text-xs"
+              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+            >
+              Medium
+            </span>
+          </div>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/npm.png"
+              alt="NPM"
+              width={iconSize}
+              height={iconSize}
+              className="rounded-lg"
+              onClick={() =>
+                openProfile("https://www.npmjs.com/~sarhaneghribi")
+              }
+            />
+            <span
+              className="text-xs"
+              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+            >
+              Npm
+            </span>
+          </div>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/filemanager.png"
+              alt="Folder Browser"
+              width={iconSize}
+              height={iconSize}
+              className="rounded-lg"
+              onClick={() => onIconClick("folder")}
+            />
+            <span
+              className="text-xs"
+              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+            >
+              Files
+            </span>
+          </div>
+        </div>
       </div>
-      <div className="absolute top-10 left-4 text-white text-lg">
-        <p className="text-4xl">{time}</p>
-        <p className="text-xs">{formattedDate}</p>
-      </div>
-      <div className="absolute bottom-20 left-0 right-0 grid grid-cols-4 gap-3">
-        <div
-          className="flex flex-col items-center"
-          onClick={() => openProfile("https://github.com/SarhaneGhribi")}
-        >
-          <Image
-            src="/github.png"
-            alt="GitHub"
-            width={iconSize}
-            height={iconSize}
-            className="rounded-lg"
-          />
-          <span className="text-xs" style={{ fontFamily: 'Roboto, sans-serif',fontSize:"11px" }}>GitHub</span>
-        </div>
-        <div
-          className="flex flex-col items-center"
-          onClick={() => openProfile("https://linkedin.com/in/sarhaneghribi")}
-        >
-          <Image
-            src="/linkedin.png"
-            alt="LinkedIn"
-            width={iconSize}
-            height={iconSize}
-            className="rounded-lg"
-          />
-          <span className="text-xs" style={{ fontFamily: 'Roboto, sans-serif',fontSize:"11px" }}>LinkedIn</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <Image
-            src="/AvatarID.png"
-            alt="Camera"
-            width={iconSize}
-            height={iconSize}
-            className="rounded-lg"
-            onClick={() => onIconClick("avatarid")}
-          />
-          <span className="text-xs" style={{ fontFamily: 'Roboto, sans-serif',fontSize:"11px" }}>AvatarID</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <Image
-            src="/tictactoe.png"
-            alt="Tic Tac Toe"
-            width={iconSize}
-            height={iconSize}
-            className="rounded-lg bg-white"
-            onClick={() => onIconClick("tictactoe")}
-          />
-          <span className="text-xs" style={{ fontFamily: 'Roboto, sans-serif',fontSize:"11px" }}>TicTacToe</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <Image
-            src="/filemanager.png"
-            alt="Folder Browser"
-            width={iconSize}
-            height={iconSize}
-            className="rounded-lg"
-          />
-          <span className="text-xs" style={{ fontFamily: 'Roboto, sans-serif',fontSize:"11px" }}>Files</span>
-        </div>
-      </div>
-    </div>
     </>
   );
 };
