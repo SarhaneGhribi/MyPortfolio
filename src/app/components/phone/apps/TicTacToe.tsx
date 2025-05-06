@@ -65,7 +65,7 @@ export default function TicTacToe() {
     confetti({
       particleCount: 100,
       spread: 70,
-      origin: { y: 0.6 },
+      origin: { y: 0.7 },
     });
   };
 
@@ -115,7 +115,7 @@ export default function TicTacToe() {
     },
     message: {
       marginTop: "20px",
-      textAlign: "center",
+     textAlign: "center",
       fontSize: "18px",
       fontWeight: "bold",
       color: "white",
