@@ -6,22 +6,25 @@ import TicTacToe from "./apps/TicTacToe";
 import AvatarID from "./apps/avatarid/AvatarID";
 import Folder from "./apps/folder/Folder";
 import Space from "./apps/space/Space";
-import Medium from "./apps/medium/Medium";
 function PhoneFrame() {
   const [currentScreen, setCurrentScreen] = useState<
     "home" | "tictactoe" | "avatarid" | "folder" | "space" | "medium"
   >("home");
+  const [showTaskSwitcher, setShowTaskSwitcher] = useState(false);
+
   return (
+    
     <div className="relative w-[300px] h-[640px] rounded-lg overflow-hidden cursor-pointer">
       <Image
         src="/xiaomi12-5g.png"
         alt="bg frame"
-        layout="fill"
         className="object-cover"
+        width={300}
+        height={640}
       />
       <div className="absolute inset-0 flex flex-col items-center justify-between p-4">
         {currentScreen === "home" && (
-          <PhoneHome onIconClick={setCurrentScreen} />
+          <PhoneHome onIconClick={setCurrentScreen} showTaskSwitcher={showTaskSwitcher} setShowTaskSwitcher={setShowTaskSwitcher}/>
         )}
         {currentScreen === "tictactoe" && <TicTacToe />}
         {currentScreen === "avatarid" && <AvatarID />}
@@ -32,7 +35,7 @@ function PhoneFrame() {
           onClick={() => setCurrentScreen("home")}
         >
           <div className="w-5 h-5 bg-gray-300 rounded"></div>
-          <div className="relative flex items-center justify-center">
+          <div className="relative flex items-center justify-center" onClick={() => setShowTaskSwitcher(!showTaskSwitcher)}>
             <div className="w-6 h-6 border-2 border-gray-300 rounded-full"></div>
             <div className="absolute w-3.5 h-3.5 bg-gray-300 rounded-full"></div>
           </div>
