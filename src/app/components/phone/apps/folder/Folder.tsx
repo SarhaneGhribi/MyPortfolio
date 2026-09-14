@@ -7,9 +7,9 @@ const Folder = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [isCvMenuOpen, setIsCvMenuOpen] = useState(false);
-  const [selectedCv, setSelectedCv] = useState<"English" | "French" | null>(
-    null
-  );
+  const [selectedCv, setSelectedCv] = useState<
+    "English" | "French" | "Canadian" | null
+  >(null);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -23,26 +23,26 @@ const Folder = () => {
     setIsSearchOpen(!isSearchOpen);
   };
 
-  const toggleCvMenu = (cvType: "English" | "French") => {
+  const toggleCvMenu = (cvType: "English" | "French" | "Canadian") => {
     setSelectedCv(cvType);
     setIsCvMenuOpen(!isCvMenuOpen);
   };
 
+  const cvFiles: Record<"English" | "French" | "Canadian", string> = {
+    English: "/SarhaneGhribi-eng.pdf",
+    French: "/SarhaneGhribi-fr.pdf",
+    Canadian: "/SarhaneGhribi-fr-ca.pdf",
+  };
+
   const handlePdfAction = (action: "open" | "download") => {
     if (selectedCv) {
-      const pdfFile =
-        selectedCv === "English"
-          ? "/SarhaneGhribi-eng.pdf"
-          : "/SarhaneGhribi-fr.pdf";
+      const pdfFile = cvFiles[selectedCv];
       if (action === "open") {
         window.open(pdfFile, "_blank");
       } else if (action === "download") {
         const link = document.createElement("a");
         link.href = pdfFile;
-        link.download =
-          selectedCv === "English"
-            ? "/SarhaneGhribi-eng.pdf"
-            : "/SarhaneGhribi-fr.pdf";
+        link.download = pdfFile;
         link.click();
       }
       setIsCvMenuOpen(false);
@@ -50,9 +50,10 @@ const Folder = () => {
   };
 
   // CV options
-  const cvOptions: { type: "English" | "French"; label: string }[] = [
+  const cvOptions: { type: "English" | "French" | "Canadian"; label: string }[] = [
     { type: "English", label: "English CV" },
     { type: "French", label: "French CV" },
+    { type: "Canadian", label: "Canadian CV" },
   ];
 
   // Filtered CV options based on search text
@@ -111,7 +112,12 @@ const Folder = () => {
         <div
           style={{
             ...styles.cvMenu,
-            left: selectedCv === "English" ? "5rem" : "10rem",
+            left:
+              selectedCv === "English"
+                ? "3rem"
+                : selectedCv === "French"
+                ? "7.5rem"
+                : "12rem",
           }}
         >
           <h4>{selectedCv} CV</h4>
@@ -206,7 +212,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   cvContainer: {
     display: "flex",
-    gap: "20px",
+    gap: "12px",
     position: "absolute",
     top: "95px",
     left: "20px",
@@ -218,8 +224,8 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: "pointer",
   },
   cvIcon: {
-    height: "5rem",
-    width: "5rem",
+    height: "3.75rem",
+    width: "3.75rem",
   },
   cvMenu: {
     position: "absolute",
