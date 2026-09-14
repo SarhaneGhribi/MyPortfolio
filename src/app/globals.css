@@ -3,42 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #08080d;
+  --foreground: #f2f2f5;
+  --muted: #a3a3b0;
+  --accent: #e79ce9;
+  --accent-2: #8b6cf2;
+  --surface: #121218;
+  --border: rgba(255, 255, 255, 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-.gesture-handler {
-  touch-action: pan-y; /* Allow vertical scrolling but prevent default horizontal */
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
-/* Optional: Visual feedback during swipe */
-.gesture-feedback {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.3);
-  transform-origin: left center;
-}
-.touch-handler {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  background: rgba(255,0,0,0.1); /* Temporary to visualize area */
+::selection {
+  background: var(--accent);
+  color: #08080d;
 }

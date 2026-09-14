@@ -1,0 +1,19 @@
+.banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+.banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url(../../public/bureau-transformed.jpeg);
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  mask-image: url(../../public/mask.gif);
+  mask-size: cover;
+  mask-position: center;
+}

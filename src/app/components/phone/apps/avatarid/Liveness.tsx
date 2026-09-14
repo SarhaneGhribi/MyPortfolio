@@ -3,14 +3,10 @@ import {
   FaceLandmarker,
   FilesetResolver,
   DrawingUtils,
-  // Landmark,
+  NormalizedLandmark,
 } from "@mediapipe/tasks-vision";
 import { commands } from "../../../../constants/constants";
 
-interface NormalizedLandmark {
-  x: number;
-  y: number;
-}
 interface FacialExpression {
   index: number;
   score: number;
@@ -33,10 +29,7 @@ interface LivenessProps {
   currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
 }
-const Liveness: React.FC<LivenessProps> = ({
-  currentIndex,
-  setCurrentIndex,
-}) => {
+const Liveness: React.FC<LivenessProps> = ({ setCurrentIndex }) => {
   const [webcamRunning, setWebcamRunning] = useState(false);
   const [results, setResults] = useState<FaceLandmarkResult | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -236,7 +229,10 @@ const Liveness: React.FC<LivenessProps> = ({
     renderFaceData(facialExpressions);
   }, [facialExpressions, results]);
 
-  const drawLandmarks = (ctx: CanvasRenderingContext2D, landmarks: any) => {
+  const drawLandmarks = (
+    ctx: CanvasRenderingContext2D,
+    landmarks?: NormalizedLandmark[][]
+  ) => {
     if (!landmarks) return;
 
     const drawingUtils = new DrawingUtils(ctx);

@@ -20,16 +20,12 @@ const AvatarIdCarousel: React.FC<AvatarIdCarouselProps> = ({
 
   return (
     <div
-      className="flex flex-col items-center cursor-pointer"
+      className="h-full w-full cursor-pointer rounded-[20px]"
       onClick={goToNextImage}
       style={{
         backgroundImage: `url("${imagePath}")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        height: "95%",
-        width: "90%",
-        position: "absolute",
-        borderRadius: "20px",
       }}
     ></div>
   );
