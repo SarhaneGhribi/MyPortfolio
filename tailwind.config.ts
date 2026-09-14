@@ -11,6 +11,11 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        muted: "var(--muted)",
+        accent: "var(--accent)",
+        "accent-2": "var(--accent-2)",
+        surface: "var(--surface)",
+        border: "var(--border)",
       },
     },
     screens: {

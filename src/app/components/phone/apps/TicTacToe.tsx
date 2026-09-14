@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, CSSProperties } from "react";
 import confetti from "canvas-confetti";
 
 type Player = "React Native" | "Flutter" | null;
@@ -69,7 +69,7 @@ export default function TicTacToe() {
     });
   };
 
-  const styles = {
+  const styles: Record<string, CSSProperties> = {
     container: {
       display: "flex",
       flexDirection: "column",

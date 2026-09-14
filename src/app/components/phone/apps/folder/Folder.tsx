@@ -50,7 +50,7 @@ const Folder = () => {
   };
 
   // CV options
-  const cvOptions = [
+  const cvOptions: { type: "English" | "French"; label: string }[] = [
     { type: "English", label: "English CV" },
     { type: "French", label: "French CV" },
   ];
@@ -143,7 +143,7 @@ const Folder = () => {
   );
 };
 
-const styles = {
+const styles: Record<string, React.CSSProperties> = {
   container: {
     display: "flex",
     flexDirection: "column",

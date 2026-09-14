@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Head from "next/head";
+import type { Screen } from "./types";
 
 interface PhoneHomeProps {
-  onIconClick: (
-    screen: "home" | "tictactoe" | "avatarid" | "folder" | "space" | "medium"
-  ) => void;
+  onIconClick: (screen: Screen) => void;
 }
 
 const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
   const [location, setLocation] = useState<string | null>(null);
   const [temperature, setTemperature] = useState<number | null>(null);
-  const [weatherCode, setWeatherCode] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [time, setTime] = useState<string>("");
   const [formattedDate, setFormattedDate] = useState<string>("");
   const iconSize: number = 45;
-  const openCageApiKey = "ad11634efa4d4752b7c345ffaec3f03a"; // Replace with your OpenCage API key
 
   // Get user's current location and weather
   useEffect(() => {
@@ -46,19 +42,17 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Fetch location name using OpenCage API
+  // Reverse-geocode the city name via BigDataCloud's free, keyless client-side
+  // API — no API key needed, so nothing to leak in the client bundle.
   const fetchLocation = async (latitude: number, longitude: number) => {
-    const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${openCageApiKey}`;
+    const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
     try {
       const response = await fetch(url);
       const data = await response.json();
-      if (data.results && data.results.length > 0) {
-        setLocation(data.results[0].components.city);
-      } else {
-        setLocation("Location not found");
-      }
+      setLocation(data.city || data.locality || "Location not found");
     } catch (error) {
       console.error("Error fetching location data:", error);
+      setLocation("Location not found");
     }
   };
 
@@ -70,7 +64,6 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
       const response = await fetch(url);
       const data = await response.json();
       setTemperature(data.current_weather.temperature);
-      setWeatherCode(data.current_weather.weathercode);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching weather data:", error);
@@ -78,61 +71,19 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
     }
   };
 
-  // Function to determine if it's daytime or nighttime
-  const isDaytime = (): boolean => {
-    const currentHour = new Date().getHours();
-    return currentHour >= 6 && currentHour < 18; // Daytime is from 6 AM to 6 PM
-  };
-
-  // Function to get weather image based on weather code and time of day
-  const getWeatherImage = () => {
-    if (loading) return null;
-
-    const daytime = isDaytime();
-    const weatherIconMap: Record<number, string> = {
-      0: daytime ? "/sunny.png" : "/moon.png", // Clear sky
-      1: daytime ? "/sunny.png" : "/moon.png", // Mainly clear
-      2: daytime ? "/cloudy.png" : "/cloudy-night.png", // Partly cloudy
-      3: daytime ? "/cloudy.png" : "/cloudy-night.png", // Cloudy
-      4: daytime ? "/overcast.png" : "/cloudy-night.png", // Overcast
-      5: "/rain.png", // Rain
-      6: "/snow.png", // Snow
-      7: "/thunderstorm.png", // Thunderstorm
-    };
-
-    return (
-      <Image
-        src={weatherIconMap[weatherCode ?? 0]}
-        alt="Weather Icon"
-        width={iconSize}
-        height={iconSize}
-      />
-    );
-  };
-
   const openProfile = (url: string) => {
     window.open(url, "_blank");
   };
 
   return (
-    <>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-      <div
-        style={{
-          backgroundImage: 'url("/bg.jpg")',
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "95%",
-          width: "90%",
-          position: "absolute",
-          borderRadius: "20px",
-        }}
-      >
+    <div
+      className="h-full w-full overflow-hidden rounded-[20px]"
+      style={{
+        backgroundImage: 'url("/bg.jpg")',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
         <div className="mt-60 w-full flex justify-center mb-4">
           <form
             action="https://www.google.com/search"
@@ -188,7 +139,7 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             />
             <span
               className="text-xs"
-              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+              style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "11px" }}
             >
               GitHub
             </span>
@@ -206,7 +157,7 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             />
             <span
               className="text-xs"
-              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+              style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "11px" }}
             >
               LinkedIn
             </span>
@@ -222,7 +173,7 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             />
             <span
               className="text-xs"
-              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+              style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "11px" }}
             >
               AvatarID
             </span>
@@ -238,7 +189,7 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             />
             <span
               className="text-xs"
-              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+              style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "11px" }}
             >
               TicTacToe
             </span>
@@ -254,7 +205,7 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             />
             <span
               className="text-xs"
-              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+              style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "11px" }}
             >
               Explore
             </span>
@@ -270,7 +221,7 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             />
             <span
               className="text-xs"
-              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+              style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "11px" }}
             >
               Medium
             </span>
@@ -288,7 +239,7 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             />
             <span
               className="text-xs"
-              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+              style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "11px" }}
             >
               Npm
             </span>
@@ -304,14 +255,29 @@ const PhoneHome = ({ onIconClick }: PhoneHomeProps) => {
             />
             <span
               className="text-xs"
-              style={{ fontFamily: "Roboto, sans-serif", fontSize: "11px" }}
+              style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "11px" }}
             >
               Files
             </span>
           </div>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/yeiza-icon.png"
+              alt="Yeiza"
+              width={iconSize}
+              height={iconSize}
+              className="rounded-lg"
+              onClick={() => onIconClick("yeiza")}
+            />
+            <span
+              className="text-xs"
+              style={{ fontFamily: "var(--font-roboto), sans-serif", fontSize: "11px" }}
+            >
+              Yeiza
+            </span>
+          </div>
         </div>
-      </div>
-    </>
+    </div>
   );
 };
 
